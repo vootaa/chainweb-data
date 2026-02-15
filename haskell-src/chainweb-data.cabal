@@ -1,4 +1,4 @@
-cabal-version:   3.16
+cabal-version:   3.8
 name:            chainweb-data
 version:         2.5.0
 description:     Data ingestion for Chainweb.

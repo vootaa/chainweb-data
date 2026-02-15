@@ -70,7 +70,7 @@ richList logger fp (ChainwebVersion version) = do
                 (fdl, cdl) = foldMap go files
                 chains = cdl []
                 isConsecutive = all (\(x,y) -> succ x == y)
-                  . (zip <*> tail)
+                  . (\xs -> zip xs (drop 1 xs))
                   . sort
             unless (isConsecutive chains)
               $ ioError $ userError

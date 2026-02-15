@@ -3,9 +3,6 @@ module ChainwebData.Backfill
 , oldLookupPlan
 ) where
 
-
-import Control.Arrow ((&&&))
-
 import Data.Bifunctor
 import Data.Map.Lazy (Map)
 import qualified Data.Map.Lazy as M
@@ -30,7 +27,7 @@ lookupPlan gi = M.foldrWithKey go []
             -- calculate 100-entry batches using min blockheight @cmin@
             -- and genesis height
             --
-            ranges = map (Low . last &&& High . head) $
+            ranges = mapMaybe mkRange $
               groupsOf blockRequestSize [cmin - 1, cmin - 2 .. genesis]
 
             -- calculate high water entry against minimum block height for cid
@@ -63,10 +60,17 @@ oldLookupPlan mins = concatMap (\pair -> mapMaybe (g pair) asList) ranges
     asList = map (second (\n -> High . max 0 $ n - 1)) $ M.toList mins
 
     ranges :: [(Low, High)]
-    ranges = map (Low . last &&& High . head) $ groupsOf blockRequestSize [maxi, maxi-1 .. 0]
+    ranges = mapMaybe mkRange $ groupsOf blockRequestSize [maxi, maxi-1 .. 0]
 
     g :: (Low, High) -> (ChainId, High) -> Maybe (ChainId, Low, High)
     g (l@(Low l'), u) (cid, mx@(High mx'))
       | u > mx && l' <= mx' = Just (cid, l, mx)
       | u <= mx = Just (cid, l, u)
       | otherwise = Nothing
+
+mkRange :: [Int] -> Maybe (Low, High)
+mkRange [] = Nothing
+mkRange (x:xs) = Just (Low (lastElem x xs), High x)
+  where
+    lastElem cur [] = cur
+    lastElem _ (y:ys) = lastElem y ys
