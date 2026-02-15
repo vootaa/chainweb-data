@@ -1,6 +1,6 @@
-cabal-version:   2.2
+cabal-version:   3.16
 name:            chainweb-data
-version:         2.4.0
+version:         2.5.0
 description:     Data ingestion for Chainweb.
 homepage:        https://github.com/kadena-io/chainweb-data
 author:          Colin Woodbury
