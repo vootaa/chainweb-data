@@ -2,7 +2,7 @@ cabal-version:   3.16
 name:            chainweb-data
 version:         2.5.0
 description:     Data ingestion for Chainweb.
-homepage:        https://github.com/kadena-io/chainweb-data
+homepage:        https://github.com/vootaa/chainweb-data
 author:          Colin Woodbury
 maintainer:
   Douglas Beardsley <doug@kadena.io>, Emily Pillmore <emily@kadena.io>, Enis Bayramoğlu <enis@kadena.io>, Emmanuel Denloye-Ito <emmanuel@kadena.io>
@@ -90,7 +90,7 @@ library
     , yet-another-logger
 
   if flag(ghc-flags)
-    build-tool-depends: hsinspect:hsinspect -any
+    build-tool-depends: hsinspect:hsinspect
     ghc-options:        -fplugin GhcFlags.Plugin
     build-depends:      ghcflags
 
