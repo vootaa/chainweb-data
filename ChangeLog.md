@@ -1,4 +1,17 @@
-# Changelog
+# Revision history for chainweb-data
+
+## 2.5.0 (2026-02-17)
+
+This release captures the cumulative `cw-version` branch work for the Vootaa fork line.
+
+### Improvements
+
+* Extend version parsing/CLI compatibility for active targets, including `mono`, `triad`, `icosa` (and current dev naming model).
+* Change default network parsing behavior from legacy mainnet to `mono` to match fork runtime expectations.
+* Add explicit events minimum-height mapping for `mono|triad|icosa` (`Just 0`) in data processing paths.
+* Remove residual legacy runtime assumptions in env/type compatibility branches and keep parser behavior aligned with current scripts/profile matrix.
+* Refresh fixtures/tests around parser and compatibility behavior for the active target set.
+* Refresh README links and narrative for the forked repository context while retaining operator-focused technical guidance.
 
 ## 2.4.0 (2023-12-21)
 

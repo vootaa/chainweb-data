@@ -30,7 +30,7 @@
 
 * Overview
 
-~chainweb-data~ stores and serves data from the Kadena Public Blockchain in a
+~chainweb-data~ stores and serves data from Chainweb networks in a
 form optimized for lookups and analysis by humans. With this reindexed data we
 can easily determine mining statistics and confirm transaction contents.
 
@@ -46,14 +46,12 @@ The chainweb-node instance should have good performance to avoid timeouts during
 ~chainweb-data~ can be built with either ~cabal~, ~stack~, or
 [[https://nixos.org/download.html][Nix]].  Building with ~nix~ is the most
 predictable because it is a single build command once you've installed Nix.
-This process will go significantly faster if you set up the Kadena nix cache
-as described
-[[https://github.com/kadena-io/pact/wiki/Building-Kadena-Projects][here]].
+
 Building with ~cabal~ or ~stack~ will probably require a little more knowledge
 of the Haskell ecosystem.
 
 #+begin_example
-git clone https://github.com/kadena-io/chainweb-data
+git clone https://github.com/vootaa/chainweb-data
 cd chainweb-data
 nix-build
 #+end_example
