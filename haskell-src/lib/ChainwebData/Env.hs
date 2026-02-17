@@ -84,10 +84,10 @@ data Env = Env
   }
 
 chainStartHeights :: [(BlockHeight, [ChainId])] -> Map ChainId BlockHeight
-chainStartHeights chainsAtHeight = go mempty chainsAtHeight
+chainStartHeights = go mempty
   where
     go m [] = m
-    go m ((h,cs):rest) = go (foldr (\c -> M.insert c h) m cs) rest
+    go m ((h,cs):rest) = go (foldr (`M.insert` h) m cs) rest
 
 data Connect = PGInfo ConnectInfo | PGString ByteString
   deriving (Eq,Show)
@@ -196,7 +196,7 @@ data BackfillArgs = BackfillArgs
   , _backfillArgs_chunkSize :: Maybe Int
   } deriving (Eq,Ord,Show)
 
-data FillArgs = FillArgs
+newtype FillArgs = FillArgs
   { _fillArgs_delayMicros :: Maybe Int
   } deriving (Eq, Ord, Show)
 
@@ -238,8 +238,8 @@ envP = Args
   -- We keep the p2p options around for backwards compatibility, but they're unused
   <* ignoredP2pParser
   where
-    ignoredP2pParser = ()
-      <$ strOption (long "p2p-host" <> internal <> value ("unused" :: String))
+    ignoredP2pParser = void
+      (strOption (long "p2p-host" <> internal <> value ("unused" :: String)))
       <* strOption (long "p2p-port" <> internal <> value ("unused" :: String))
 
 migrationsParser :: Parser Migrations
@@ -304,13 +304,12 @@ richListP = hsubparser
 
 versionReader :: ReadM ChainwebVersion
 versionReader = eitherReader $ \case
-  txt | map toLower txt == "mainnet01" || map toLower txt == "mainnet" -> Right "mainnet01"
-  txt | map toLower txt == "testnet04" || map toLower txt == "testnet" -> Right "testnet04"
-  txt | map toLower txt == "testnet05" -> Right "testnet05"
+  txt | map toLower txt == "mono-dev" || map toLower txt == "mono-devnet" -> Right "mono-dev"
+  txt | map toLower txt == "triad-dev" || map toLower txt == "triad-devnet" -> Right "triad-dev"
+  txt | map toLower txt == "icosa-dev" || map toLower txt == "icosa-devnet" -> Right "icosa-dev"
   txt | map toLower txt == "mono" -> Right "mono"
   txt | map toLower txt == "triad" -> Right "triad"
   txt | map toLower txt == "icosa" -> Right "icosa"
-  txt | map toLower txt == "development" -> Right "development"
   txt -> Left $ printf "Can't read chainwebversion: got %" txt
 
 simpleVersionParser :: Parser ChainwebVersion
@@ -337,8 +336,7 @@ connectInfoP = ConnectInfo
   <*> strOption   (long "dbname" <> help "Postgres DB name")
 
 singleP :: Parser Command
-singleP = Single
-  <$> (ChainId <$> option auto (long "chain" <> metavar "INT"))
+singleP = (Single . ChainId <$> option auto (long "chain" <> metavar "INT"))
   <*> option auto (long "height" <> metavar "INT")
 
 serverP :: Parser ServerEnv
@@ -360,7 +358,7 @@ etlP = optional $ toETLEnv
   <*> delayP
   where
     toETLEnv :: Bool -> Maybe Int -> ETLEnv
-    toETLEnv runFill delay = ETLEnv runFill delay
+    toETLEnv = ETLEnv
 
 delayP :: Parser (Maybe Int)
 delayP = optional $ option auto (long "delay" <> metavar "DELAY_MICROS" <> help  "Number of microseconds to delay between queries to the node")

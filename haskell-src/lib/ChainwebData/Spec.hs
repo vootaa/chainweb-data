@@ -36,6 +36,7 @@ import ChainwebData.TxDetail
 import ChainwebData.TransferDetail (TransferDetail)
 import Chainweb.Api.StringEncoded (StringEncoded)
 import Data.Scientific (Scientific)
+import qualified Data.OpenApi.Lens as OpenApiLens
 
 instance ToSchema A.Value where
   declareNamedSchema _ = pure $ NamedSchema (Just "AnyValue") mempty
@@ -113,7 +114,7 @@ instance ToSchema (StringEncoded Scientific) where
   declareNamedSchema _ = pure $ NamedSchema (Just "StringEncodedNumber") $ mempty
     & type_ ?~ OpenApiString
     & example ?~ A.String "-1234.5e6"
-    & pattern ?~ "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?"
+    & OpenApiLens.pattern ?~ "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?"
 
 spec :: OpenApi
 spec = toOpenApi (Proxy :: Proxy ChainwebDataApi)

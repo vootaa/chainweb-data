@@ -50,7 +50,7 @@ parseUnitTests = testGroup "Parser unit tests"
               "3":"MsqHenmTRs42OVDB28oP_5MZCm8RaqDSVDrsVsTo2X0"
             },
             "payloadHash":"G5olU5tYfqU7FYXw99vyqEnURagZB-f2pL9ux7gwYks",
-            "chainwebVersion":"mainnet01",
+            "chainwebVersion":"mono",
             "target":"_________________________________________x8",
             "nonce":"15652723681697760986"
           }

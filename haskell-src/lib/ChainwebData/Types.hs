@@ -1,7 +1,6 @@
 {-# LANGUAGE DerivingStrategies #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE NumericUnderscores #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE TypeApplications #-}
 {-# OPTIONS_GHC -fno-warn-orphans #-}
@@ -120,13 +119,10 @@ withEventsMinHeight version errorMessage action = withVersion version onVersion 
   where
     -- Associate each version with the fork height for Pact4Coin3
     onVersion = \case
-      "mainnet01" -> Just 1_722_500
-      "testnet04" -> Just 1_261_000
-      "recap-development" -> Just 14
-      "development" -> Just 0
-      "testnet05" -> Just 0
-      "pact5-development" -> Just 0
       "mono" -> Just 0
       "triad" -> Just 0
       "icosa" -> Just 0
+      "mono-dev" -> Just 0
+      "triad-dev" -> Just 0
+      "icosa-dev" -> Just 0
       _ -> Nothing
