@@ -307,13 +307,17 @@ versionReader = eitherReader $ \case
   txt | map toLower txt == "mainnet01" || map toLower txt == "mainnet" -> Right "mainnet01"
   txt | map toLower txt == "testnet04" || map toLower txt == "testnet" -> Right "testnet04"
   txt | map toLower txt == "testnet05" -> Right "testnet05"
+  txt | map toLower txt == "mono" -> Right "mono"
+  txt | map toLower txt == "triad" -> Right "triad"
+  txt | map toLower txt == "icosa" -> Right "icosa"
+  txt | map toLower txt == "development" -> Right "development"
   txt -> Left $ printf "Can't read chainwebversion: got %" txt
 
 simpleVersionParser :: Parser ChainwebVersion
 simpleVersionParser =
   option versionReader $
     long "chainweb-version"
-    <> value "mainnet01"
+    <> value "mono"
     <> help "Chainweb node version"
 
 connectP :: Parser Connect

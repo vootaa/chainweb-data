@@ -126,4 +126,7 @@ withEventsMinHeight version errorMessage action = withVersion version onVersion 
       "development" -> Just 0
       "testnet05" -> Just 0
       "pact5-development" -> Just 0
+      "mono" -> Just 0
+      "triad" -> Just 0
+      "icosa" -> Just 0
       _ -> Nothing
